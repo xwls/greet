@@ -6,7 +6,14 @@ type Response {
 	Message string `json:"message"`
 }
 
+type HostNameResponse {
+	Hostname string `json:"hostname"`
+}
+
 service greet-api {
 	@handler GreetHandler
 	get /from/:name(Request) returns (Response)
+	
+	@handler HostnameHandler
+	get /hostname returns (HostNameResponse)
 }
