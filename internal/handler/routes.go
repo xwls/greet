@@ -22,6 +22,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/hostname",
 				Handler: HostnameHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/validate",
+				Handler: ValidateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/user-id",
+				Handler: UserIdHandler(serverCtx),
+			},
 		},
 	)
 }

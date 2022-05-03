@@ -12,3 +12,23 @@ type Response struct {
 type HostNameResponse struct {
 	Hostname string `json:"hostname"`
 }
+
+type UserIdReq struct {
+	UserId int64 `form:"userId" validate:"gte=30,lte=130"`
+}
+
+type User struct {
+	FirstName      string    `form:"FirstName" validate:"required"`
+	LastName       string    `form:"LastName" validate:"required"`
+	Age            uint8     `form:"Age" validate:"gte=0,lte=130"`
+	Email          string    `form:"Email" validate:"required,email"`
+	FavouriteColor string    `form:"FavouriteColor" validate:"iscolor"`           // alias for 'hexcolor|rgb|rgba|hsl|hsla'
+	Addresses      []Address `form:"Addresses" validate:"required,dive,required"` // a person can have a home and cottage...
+}
+
+type Address struct {
+	Street string `validate:"required"`
+	City   string `validate:"required"`
+	Planet string `validate:"required"`
+	Phone  string `validate:"required"`
+}

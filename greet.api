@@ -10,10 +10,36 @@ type HostNameResponse {
 	Hostname string `json:"hostname"`
 }
 
+type UserIdReq {
+	UserId int64 `form:"userId" validate:"gte=30,lte=130"`
+}
+
+type User {
+	FirstName      string    `form:"FirstName" validate:"required"`
+	LastName       string    `form:"LastName" validate:"required"`
+	Age            uint8     `form:"Age" validate:"gte=0,lte=130"`
+	Email          string    `form:"Email" validate:"required,email"`
+	FavouriteColor string    `form:"FavouriteColor" validate:"iscolor"`           // alias for 'hexcolor|rgb|rgba|hsl|hsla'
+	Addresses      []Address `form:"Addresses" validate:"required,dive,required"` // a person can have a home and cottage...
+}
+
+type Address {
+	Street string `validate:"required"`
+	City   string `validate:"required"`
+	Planet string `validate:"required"`
+	Phone  string `validate:"required"`
+}
+
 service greet-api {
 	@handler GreetHandler
 	get /from/:name(Request) returns (Response)
 	
 	@handler HostnameHandler
 	get /hostname returns (HostNameResponse)
+	
+	@handler Validate
+	post /validate (User) returns (User)
+	
+	@handler UserId
+	get /user-id (UserIdReq) returns (UserIdReq)
 }
